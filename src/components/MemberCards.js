@@ -8,6 +8,7 @@ import Text from './Text'
 import Link from '@mui/material/Link';
 import PhoneNumber from './PhoneNumber'
 import Card from '@mui/material/Card';
+import './MemberCards.sass'
 
 const MemberCards = (props) => {
   const {
@@ -24,41 +25,54 @@ const MemberCards = (props) => {
       component={Card}
       sx={{
         flex: {
-          desktop: '32%',
-          laptop: '32%',
-          tablet: '48%',
+          desktop: 'calc((100% - 32px) / 3)',
+          laptop: 'calc((100% - 16px) / 2)',
+          tablet: '100%',
           mobile: '100%',
         },
         maxWidth: {
-          desktop: '32%',
-          laptop: '32%',
-          tablet: '48%',
+          desktop: 'calc((100% - 32px) / 3)',
+          laptop: 'calc((100% - 16px) / 2)',
+          tablet: '100%',
           mobile: '100%',
-        }
+        },
       }}
+      className="member-cards"
     >
-      <CardContent sx={{padding: '0 !important'}}>
-        <Box m="20px">
-          <Avatar
-            src={photo}
-            sx={{margin: '0 auto', height: 56, width: 56}}
-          />
+      <CardContent>
+        <Box>
+          <Avatar src={photo} />
         </Box>
-        <Box m="20px">
-          <Text align="center">{name}</Text>
+        <Box>
+          <Text
+            align="center"
+            ellipsis
+          >
+            {name}
+          </Text>
         </Box>
-        <Box m="20px">
-          <Text align="center">{position}</Text>
+        <Box>
+          <Text
+            align="center"
+            ellipsis>
+            {position}
+          </Text>
           <CustomTooltip title={email}>
-            <Link href={"mailto:" + email} sx={{color: 'black'}}>
-              <Text align="center">{email}</Text>
+            <Link href={"mailto:" + email}>
+              <Text
+                align="center"
+                ellipsis
+              >
+                {email}
+              </Text>
             </Link>
           </CustomTooltip>
           <CustomTooltip title={phone}>
-            <Link href={"tel:" + phone} sx={{color: 'black'}}>
+            <Link href={"tel:" + phone}>
               <PhoneNumber
                 align="center"
                 phone={phone}
+                ellipsis
               >
                 {phone}
               </PhoneNumber>

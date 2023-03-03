@@ -6,6 +6,7 @@ import CustomButton from '../components/CustomButton'
 import axios from 'axios'
 import CircularProgress from '@mui/material/CircularProgress';
 import MemberCards from '../components/MemberCards';
+import FormHelperText from '@mui/material/FormHelperText';
 
 let endpoint = process.env.REACT_APP_API_ENDPOINT + '/users?count=6'
 const Members = (props) => {
@@ -16,10 +17,10 @@ const Members = (props) => {
   const [ members, setMembers ] = React.useState([]);
   const [ disabledShow, setDisabledShow ] = React.useState(false);
   const [ loading, setLoading ] = React.useState(true);
+  const [ errorMsg, setErrorMsg ] = React.useState('');
 
   const loadMore = React.useCallback(() => {
     setLoading(true)
-    setDisabledShow(true);
     axios.get(endpoint)
       .then(({data}) => {
         endpoint = data.links.next_url;
@@ -30,6 +31,10 @@ const Members = (props) => {
           ]
         })
         setDisabledShow(data.links.next_url === null)
+      })
+      .catch(error => {
+        setErrorMsg('SYSTEM ERROR: It could not get the list of users')
+        setDisabledShow(true);
       })
       .finally(() => setLoading(false))
   }, [
@@ -49,7 +54,6 @@ const Members = (props) => {
     if (reload) {
       endpoint = process.env.REACT_APP_API_ENDPOINT + '/users?count=6'
       setMembers([]);
-      setDisabledShow(false);
       loadMore();
     }
   }, [
@@ -90,6 +94,12 @@ const Members = (props) => {
         ))}
         {loading && Loading}
       </Grid>
+      <FormHelperText
+        sx={{textAlign: 'center'}}
+        error
+      >
+        {errorMsg}
+      </FormHelperText>
       <Box align="center" my={3}>
         <CustomButton
           onClick={loadMore}

@@ -11,6 +11,7 @@ import UploadButton from '../components/UploadButton'
 import useValidation from '../hooks/useValidation'
 import successImage from '../assets/success-image.svg'
 import axios from 'axios'
+import './RegisterForm.sass'
 
 const endpointForPosition = process.env.REACT_APP_API_ENDPOINT + '/positions'
 const endpointForUser = process.env.REACT_APP_API_ENDPOINT + '/users'
@@ -177,6 +178,7 @@ const RegisterForm = (props) => {
     return <Heading
       align="center"
       py={5}
+      className="register-form-header"
     >
       {headingTitle}
     </Heading>
@@ -190,12 +192,13 @@ const RegisterForm = (props) => {
         <Box component="img" src={successImage} />
       </Box>
     } else {
-      return <Box px={32}>
-        <form
+      return <Box
+          className="register-form-content"
+          component="form"
           noValidate
           onSubmit={handleSubmit}
         >
-          <Box align="center" m={5} mt={0}>
+          <Box align="center" my={4} mt={0}>
             <TextField
               fullWidth
               label="Your name"
@@ -211,7 +214,7 @@ const RegisterForm = (props) => {
               }}
             />
           </Box>
-          <Box align="center" m={5}>
+          <Box align="center" my={4}>
             <TextField
               fullWidth
               label="Email"
@@ -227,7 +230,7 @@ const RegisterForm = (props) => {
               }}
             />
           </Box>
-          <Box align="center" m={5}>
+          <Box align="center" my={4}>
             <TextField
               fullWidth
               label="Phone"
@@ -242,7 +245,7 @@ const RegisterForm = (props) => {
               }}
             />
           </Box>
-          <Box m={5}>
+          <Box my={4}>
             <CustomRadio
               color="secondary"
               error={errorFieldMessages.position_id !== undefined}
@@ -259,10 +262,10 @@ const RegisterForm = (props) => {
                   label={position.name}
                   key={position.id}
                 />
-              ))}
+            ))}
             </CustomRadio>
           </Box>
-          <Box m={5}>
+          <Box my={4}>
             <UploadButton
               error={errorFieldMessages.photo !== undefined}
               helperText={errorFieldMessages.photo && errorFieldMessages.photo[0]}
@@ -278,7 +281,7 @@ const RegisterForm = (props) => {
           >
             {errorMessage}
           </FormHelperText>
-          <Box align="center" my={3}>
+          <Box align="center" my={3} mb={0}>
             <CustomButton
               type="submit"
               loading={processing}
@@ -287,8 +290,7 @@ const RegisterForm = (props) => {
               Sign up
             </CustomButton>
           </Box>
-        </form>
-      </Box>
+        </Box>
     }
   }, [
     errorFieldMessages,
@@ -302,7 +304,7 @@ const RegisterForm = (props) => {
   ])
 
   return (
-    <Box mt={5}>
+    <Box my={5} className="register-form">
       {HeadingNode}
       {ContentNode}
     </Box>
